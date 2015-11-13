@@ -1,0 +1,69 @@
+import org.dreambot.api.methods.Calculations;
+import org.dreambot.api.methods.filter.Filter;
+import org.dreambot.api.methods.interactive.GameObjects;
+import org.dreambot.api.methods.map.Area;
+import org.dreambot.api.script.AbstractScript;
+import org.dreambot.api.script.ScriptManifest;
+import org.dreambot.api.wrappers.interactive.GameObject;
+import org.dreambot.api.script.Category;
+
+/**
+ * Created by Nancy on 11/11/2015.
+ */
+@ScriptManifest(author = "Hitsuu", name = "Miner Script", category = Category.MINING, version = 1)
+public class Miner extends AbstractScript {
+
+    private final Area MINING_AREA = new Area();
+    private final Area BANK_AREA = new Area();
+    public Object rock;
+    public String pickaxe;
+    public String ore;
+    public String gem;
+
+    public state state;
+
+    public enum state{
+    MINE, DROP
+    }
+
+    private state getState() {
+        if (getInventory().contains(pickaxe) && getInventory().contains(ore)) {
+            return state.MINE;
+        } else if (getInventory().contains(ore)) {
+            return state.DROP;
+        }
+    }
+    @Override
+    public int onLoop() {
+        state = getState();
+        switch(state){
+            case MINE:
+                if(getInventory().contains("pickaxe")&&!getInventory().contains("ore")) {
+                    mine();
+                }
+                break;
+            case DROP:
+                if(getInventory().contains("ore")) {
+                    drop();
+                }
+                break;
+        }
+        return 600;
+    }
+
+        public void mine() {
+        if(getInventory().contains("pickaxe")){
+            if(!getInventory().contains("ore")){
+            getGameObjects().all().get(13447) = new
+            }
+        }
+
+
+    public void drop()
+    {
+        if(!getInventory().contains(ore))
+        {
+            getInventory().dropAllExcept(String.valueOf(pickaxe), String.valueOf(gem));
+        }
+    }
+}
